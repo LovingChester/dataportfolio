@@ -7,7 +7,7 @@ This Python Script extracts videos from the given YouTube
 Channel and stores them into the database.
 '''
 
-API_KEY = 'AIzaSyCKzg-StHsAE5AXnfxUe8oKOXOkbhjHd-w'
+API_KEY = ''
 CHANNEL_ID = 'UCU2PacFf99vhb3hNiYDmxww'
 
 #url = 'https://www.googleapis.com/youtube/v3/search'
