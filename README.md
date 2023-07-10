@@ -1,2 +1,2 @@
 # mlportfolio
-This repository will include some of my personal work on machine learning tasks.
+This repository will include some of my personal project on machine learning tasks.
