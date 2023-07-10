@@ -1,4 +1,4 @@
-# mlportfolio
+# Chelseafc YouTube Channel Data Analysis Project
 This folder includes the project the analysis of Chelseafc YouTube Channel
 
 File get_channel_data.py extracts data from the YouTube and stores them into database
