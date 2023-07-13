@@ -1,12 +1,14 @@
 import requests
 import mysql.connector
 import re
+from datetime import date
 
 '''
 This Python Script extracts videos from the given YouTube
 Channel and stores them into the database.
 '''
 
+# Delete it when upload to GitHub
 API_KEY = ''
 CHANNEL_ID = 'UCU2PacFf99vhb3hNiYDmxww'
 
@@ -15,10 +17,10 @@ CHANNEL_ID = 'UCU2PacFf99vhb3hNiYDmxww'
 
 page = 0
 next_page_token = None
-video_ids = []
+unique = set()
 data_videos = []
 count = 0
-while page < 1:
+while True:
     print(page+1)
     # Fetch items for the current page
     search_url = 'https://www.googleapis.com/youtube/v3/search'
@@ -39,10 +41,15 @@ while page < 1:
             item['id']['kind'] != 'youtube#video':
             continue
         video_id = item['id']['videoId']
+        recordTime = date.today()
+        unique.add((video_id, recordTime))
         title = item['snippet']['title']
         pattern = r'[^a-zA-Z0-9]'
         title = re.sub(pattern, ' ', title)
-        title = title.replace('  ', ' ').replace(' 39 ', "'")
+        #title = title.replace('   ', ' ').replace('  ', ' ').replace(' 39 ', "'").replace(' quot ', '"')
+        title = title.replace('  39 ', "'").replace(' quot ', '"').replace(' amp ', '&')
+        title = title.replace('   ', ' ').replace('  ', ' ')
+        title = title.strip().lower()
 
         publishedAt = item['snippet']['publishedAt'].split('T')[0]
         
@@ -54,9 +61,12 @@ while page < 1:
         }
 
         video_response = requests.get(video_url, video_params).json()
-        #print(video_response)
+        
+        # Parse the Duration, which is in form PT#H#M#S
         duration = video_response['items'][0]['contentDetails']['duration']
         duration = duration[2:]
+        if duration.find('D') != -1:
+            continue
         H_idx, M_idx, S_idx = duration.find('H'), duration.find('M'), duration.find('S')
         seconds = 0
         if H_idx != -1 and M_idx != -1 and S_idx != -1:
@@ -80,7 +90,7 @@ while page < 1:
         favoriteCount = int(video_response['items'][0]['statistics']['favoriteCount'])
         commentCount = int(video_response['items'][0]['statistics']['commentCount'])
 
-        data_video = (video_id, title, publishedAt, duration, viewCount, likeCount, favoriteCount, commentCount)
+        data_video = (video_id, recordTime, title, publishedAt, duration, viewCount, likeCount, favoriteCount, commentCount)
         data_videos.append(data_video)
         
     # Check if there are more pages to fetch
@@ -92,12 +102,16 @@ while page < 1:
 
 print(len(data_videos))
 print(count)
+print(len(unique))
 
 #### DATABASE ####
 '''
-Video(videoId, title, publishedAt, duration, viewCount, likeCount, favoutiteCount, commentCount)
-Keys: videoId
-videoId->title, publishedAt, duration, viewCount, likeCount, favouriteCount, commentCount
+Video(videoId, recordTime, title, publishedAt, duration, viewCount, likeCount, favoriteCount, commentCount)
+Keys: videoId, (title, publishAt)
+Primary Attributes: videoId, title, publishAt
+Functional Dependencies:
+videoId, recordTime->title, publishedAt, duration, viewCount, likeCount, favoriteCount, commentCount
+title, publishedAt->duration, viewCount, likeCount, favoriteCount, commentCount
 '''
 
 try:
@@ -113,6 +127,7 @@ cursor = cnx.cursor()
 # Create the videos table
 create_table = ("CREATE TABLE IF NOT EXISTS videos ("
                 "videoid VARCHAR(15) NOT NULL,"
+                "recordTime DATE NOT NULL,"
                 "title VARCHAR(200) DEFAULT NULL,"
                 "publishedAt DATE DEFAULT NULL,"
                 "duration INT(11) DEFAULT NULL,"
@@ -120,15 +135,15 @@ create_table = ("CREATE TABLE IF NOT EXISTS videos ("
                 "likeCount INT(11) DEFAULT NULL,"
                 "favoriteCount INT(11) DEFAULT NULL,"
                 "commentCount INT(11) DEFAULT NULL,"
-                "PRIMARY KEY (videoid)"
+                "PRIMARY KEY (videoid, recordTime)"
                 ")ENGINE=InnoDB DEFAULT CHARSET=utf8"
                 )
 
 cursor.execute(create_table)
 
 add_video = ("INSERT INTO videos "
-            "(videoid, title, publishedAt, duration, viewCount, likeCount, favoriteCount, commentCount) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s) "
+            "(videoid, recordTime, title, publishedAt, duration, viewCount, likeCount, favoriteCount, commentCount) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) "
             "ON DUPLICATE KEY UPDATE "
             "title = VALUES(title),"
             "viewCount = VALUES(viewCount),"
