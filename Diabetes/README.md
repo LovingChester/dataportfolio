@@ -7,5 +7,4 @@ The notebook Diabetes_prediction.ipynb contains EDA and classification
 The Data Wrangling, Preprocessing, and model selection is based on the paper:
 
 ### Tableau Link to the Data Visualization:
-
-Will be Updated
+https://public.tableau.com/app/profile/houhua.li/viz/DiabetesDataVisualization_16905179889760/DiabetesStory?publish=yes
