@@ -1,2 +1,2 @@
 # Data Portfolio
-This repository will include some of my personal project on machine learning tasks.
+This repository will include some of my personal data project.
