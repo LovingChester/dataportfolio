@@ -9,7 +9,7 @@ Channel and stores them into the database.
 '''
 
 # Delete it when upload to GitHub
-API_KEY = ''
+API_KEY = 'AIzaSyCKzg-StHsAE5AXnfxUe8oKOXOkbhjHd-w'
 CHANNEL_ID = 'UCU2PacFf99vhb3hNiYDmxww'
 
 #url = 'https://www.googleapis.com/youtube/v3/search'
@@ -61,7 +61,9 @@ while True:
         }
 
         video_response = requests.get(video_url, video_params).json()
-        
+        if 'error' in video_response.keys():
+            continue
+        #print(video_response)
         # Parse the Duration, which is in form PT#H#M#S
         duration = video_response['items'][0]['contentDetails']['duration']
         duration = duration[2:]
