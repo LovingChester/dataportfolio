@@ -4,19 +4,19 @@
 In this project, I extract, transform, and load (ETL) crime data to uncover insights and trends. Crime data is a valuable resource for understanding patterns, behaviors, and factors that contribute to criminal incidents. 
 
 ## Dataset Description: The dataset contains information about incidents, offenses, and related details. 
-The columns in the dataset provide various pieces of information about each incident:
-INCIDENT_NUMBER: A unique identifier for each incident.
-OFFENSE_CODE: Code representing the type of offense.
-OFFENSE_CODE_GROUP: Group/category of offenses.
-OFFENSE_DESCRIPTION: Description of the offense.
-DISTRICT: District where the incident occurred.
-REPORTING_AREA: Area within the district where the incident was reported.
-SHOOTING: Indicates whether a shooting was involved in the incident.
-OCCURRED_ON_DATE: Date and time when the incident occurred.
-YEAR, MONTH, DAY_OF_WEEK, HOUR: Temporal components of the incident date.
-UCR_PART: UCR (Uniform Crime Reporting) category of the offense.
-STREET: Street where the incident occurred.
-Lat, Long: Latitude and longitude coordinates of the incident location.
+The columns in the dataset provide various pieces of information about each incident:  
+INCIDENT_NUMBER: A unique identifier for each incident.  
+OFFENSE_CODE: Code representing the type of offense.  
+OFFENSE_CODE_GROUP: Group/category of offenses.  
+OFFENSE_DESCRIPTION: Description of the offense.  
+DISTRICT: District where the incident occurred.  
+REPORTING_AREA: Area within the district where the incident was reported.  
+SHOOTING: Indicates whether a shooting was involved in the incident.  
+OCCURRED_ON_DATE: Date and time when the incident occurred.  
+YEAR, MONTH, DAY_OF_WEEK, HOUR: Temporal components of the incident date.  
+UCR_PART: UCR (Uniform Crime Reporting) category of the offense.  
+STREET: Street where the incident occurred.  
+Lat, Long: Latitude and longitude coordinates of the incident location.  
 Location: Geographical location in a format that combines latitude and longitude.
 
 ## Project Setup:
