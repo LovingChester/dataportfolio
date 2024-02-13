@@ -9,7 +9,7 @@ Channel and stores them into the database.
 '''
 
 # Delete it when upload to GitHub
-API_KEY = 'AIzaSyCKzg-StHsAE5AXnfxUe8oKOXOkbhjHd-w'
+API_KEY = ''
 CHANNEL_ID = 'UCU2PacFf99vhb3hNiYDmxww'
 
 #url = 'https://www.googleapis.com/youtube/v3/search'
@@ -33,7 +33,7 @@ while True:
     }
 
     search_response = requests.get(search_url, search_params).json()
-    #print(search_response['items'][0])
+    print(search_response['items'][0])
     for item in search_response['items']:
         #print(item)
         count += 1
