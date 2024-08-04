@@ -1,3 +1,7 @@
+'''
+The script is used for AWS Glue to perform ETL on the data.
+'''
+
 import sys
 from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
