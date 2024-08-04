@@ -1,0 +1,12 @@
+{
+    "fileLocations": [
+        {
+            "URIPrefixes": [
+                "s3://edward-s3-crime-v1/la_transformed/"
+            ]
+        }
+    ],
+    "globalUploadSettings": {
+        "format": "CSV"
+    }
+}
